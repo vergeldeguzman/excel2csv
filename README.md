@@ -24,6 +24,11 @@ optional arguments:
                         namespace for excel xml file
 ```
 
+## Requirements
+
+	python 3.5
+    xlrd
+
 ## Example run
 
 Convert xlsx file to csv
