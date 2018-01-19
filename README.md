@@ -2,7 +2,7 @@
 
 Script to convert Excel xls/xlsx file to csv. In addition, it can convert
 Excel workbook saved in xml format. Optionally, use can specify xml namespace 
-which defaults to urn:schemas-microsoft-com:office:spreadsheet. 
+which defaults to `urn:schemas-microsoft-com:office:spreadsheet`. 
 
 ## Running the tests
 
@@ -27,7 +27,7 @@ optional arguments:
 ## Requirements
 
 	python 3.5
-    xlrd
+    lxml
 
 ## Example run
 
