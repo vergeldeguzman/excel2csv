@@ -1,6 +1,6 @@
-# xls2csv
+# excel2csv
 
-Script to convert Excel xls/xlsx file to csv. In addition, it can convert
+Script to convert Excel xls and xlsx file to csv. In addition, it can convert
 Excel workbook saved in xml format. Optionally, use can specify xml namespace 
 which defaults to `urn:schemas-microsoft-com:office:spreadsheet`. 
 
@@ -13,7 +13,7 @@ python3 -m unittest tests/test_xls2csv.py
 ## Usage
 
 ```
-usage: xls2csv.py [-h] -i INPUT_FILE [-x] [-n XML_NAMESPACE]
+usage: excel2csv.py [-h] -i INPUT_FILE [-x] [-n XML_NAMESPACE]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -26,19 +26,20 @@ optional arguments:
 
 ## Requirements
 
-	python 3.5
+    python 3.5
     lxml
+    xlrd
 
 ## Example run
 
 Convert xlsx file to csv
 
 ```
-python3 xls2csv.py -i workbook.xlsx
+python3 excel2csv.py -i workbook.xlsx
 ```
 
 Convert Excel xml file to csv
 
 ```
-python3 xls2csv.py -i another_workbook.xml -x xml
+python3 excel2csv.py -i another_workbook.xml -x xml
 ```
