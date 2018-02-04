@@ -52,9 +52,14 @@ class Excel2CsvTest(unittest.TestCase):
         self.assertTrue(filecmp.cmp(output_file, expected_file))
         os.remove(output_file)
 
+    def test_parse_xls_ambiguous_date_exception(self):
+        input_file = os.path.join(os.path.dirname(__file__), 'ambiguousdate.xlsx')
+        self.assertRaises(excel2csv.Excel2CsvException,
+                          lambda: excel2csv.parse_xls(input_file))
+
     def test_parse_xml_exception(self):
         input_file = os.path.join(os.path.dirname(__file__), '1table.xlsx')
-        self.assertRaises(excel2csv.Xls2CsvException,
+        self.assertRaises(excel2csv.Excel2CsvException,
                           lambda: excel2csv.parse_xml(input_file, excel2csv.DEFAULT_XML_NAMESPACE))
 
     def test_parse_xml_file_does_not_exist(self):
@@ -64,7 +69,7 @@ class Excel2CsvTest(unittest.TestCase):
 
     def test_parse_xls_exception(self):
         input_file = os.path.join(os.path.dirname(__file__), '1table.xml')
-        self.assertRaises(excel2csv.Xls2CsvException,
+        self.assertRaises(excel2csv.Excel2CsvException,
                           lambda: excel2csv.parse_xls(input_file))
 
     def test_parse_xls_file_does_not_exist(self):
