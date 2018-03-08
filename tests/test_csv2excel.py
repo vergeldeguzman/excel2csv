@@ -51,15 +51,17 @@ class Csv2XlsTest(unittest.TestCase):
         self.assertEqual(4, ws.cell_value(3, 2))
 
     def test_write_xlsx(self):
-        input_files = ['table1.csv','table2.csv']
-        output_file = 'output.xlsx'
+        input_files = [os.path.join(os.path.dirname(__file__), 'table1.csv'),
+                       os.path.join(os.path.dirname(__file__), 'table2.csv')]
+        output_file = os.path.join(os.path.dirname(__file__), 'output.xlsx')
         csv2excel.write_excel_from_csv(output_file, input_files, True)
         self.assert_excel_file(output_file)
         os.remove(output_file)
 
     def test_write_xls(self):
-        input_files = ['table1.csv','table2.csv']
-        output_file = 'output.xls'
+        input_files = [os.path.join(os.path.dirname(__file__), 'table1.csv'),
+                       os.path.join(os.path.dirname(__file__), 'table2.csv')]
+        output_file = os.path.join(os.path.dirname(__file__), 'output.xlsx')
         csv2excel.write_excel_from_csv(output_file, input_files, True)
         self.assert_excel_file(output_file)
         os.remove(output_file)
