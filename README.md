@@ -1,14 +1,14 @@
 # excel2csv / csv2excel
 
-excel2csv is a script to convert Excel xls , xlsx or xml file to csv file. The csv files are generated from each Excel sheet.
+excel2csv is a script that converts Excel file (xls, xlsx or xml) to csv file. The csv files are generated from each Excel sheet.
 For example, Workbook.xlsx has 3 sheets (i.e. Sheet1, Sheet2, Sheet3), the script generates Workbook_Sheet1.csv,
 Workbook_Sheet2.csv, Workbook_Sheet3.csv.
  
-Optionally, user can specify xml namespace 
-which defaults to `urn:schemas-microsoft-com:office:spreadsheet` to generates xml files.
+Optionally, user can specify xml namespace, 
+which defaults to `urn:schemas-microsoft-com:office:spreadsheet`, to generates xml files.
 
-csv2excel is another script to convert csv file to Excel xls file or Excel xlsx file. The script
-accept several csv files per Excel sheet. 
+csv2excel is a script that converts csv file to Excel xls file or Excel xlsx file. This script
+accepts several csv files (one csv file per Excel sheet). 
  
 ## Running the tests
 
