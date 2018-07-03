@@ -8,7 +8,7 @@ class Excel2CsvTest(unittest.TestCase):
 
     def test_parse_xml_1table(self):
         input_file = os.path.join(os.path.dirname(__file__), '1table.xml')
-        excel2csv.parse_xml(input_file, excel2csv.DEFAULT_XML_NAMESPACE)
+        excel2csv.parse_xml(input_file)
 
         output_file = '1table_Sheet1.csv'
         expected_file = os.path.join(os.path.dirname(__file__), '1table_Sheet1.expected.xml.csv')
@@ -26,7 +26,7 @@ class Excel2CsvTest(unittest.TestCase):
 
     def test_parse_xml_2sheets(self):
         input_file = os.path.join(os.path.dirname(__file__), '2sheets.xml')
-        excel2csv.parse_xml(input_file, excel2csv.DEFAULT_XML_NAMESPACE)
+        excel2csv.parse_xml(input_file)
 
         output_file = '2sheets_Sheet1.csv'
         expected_file = os.path.join(os.path.dirname(__file__), '2sheets_Sheet1.expected.xml.csv')
@@ -60,12 +60,12 @@ class Excel2CsvTest(unittest.TestCase):
     def test_parse_xml_exception(self):
         input_file = os.path.join(os.path.dirname(__file__), '1table.xlsx')
         self.assertRaises(excel2csv.Excel2CsvException,
-                          lambda: excel2csv.parse_xml(input_file, excel2csv.DEFAULT_XML_NAMESPACE))
+                          lambda: excel2csv.parse_xml(input_file))
 
     def test_parse_xml_file_does_not_exist(self):
         input_file = 'file_does_not_exist'
         self.assertRaises(OSError,
-                          lambda: excel2csv.parse_xml(input_file, excel2csv.DEFAULT_XML_NAMESPACE))
+                          lambda: excel2csv.parse_xml(input_file))
 
     def test_parse_xls_exception(self):
         input_file = os.path.join(os.path.dirname(__file__), '1table.xml')

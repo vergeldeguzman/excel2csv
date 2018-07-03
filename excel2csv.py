@@ -9,8 +9,6 @@ from lxml import etree
 
 import xlrd
 
-DEFAULT_XML_NAMESPACE = 'urn:schemas-microsoft-com:office:spreadsheet'
-
 
 class Excel2CsvException(Exception):
     pass
@@ -27,26 +25,31 @@ def get_cell_value_from_xml(xml_cell, ns):
     return cell_data
 
 
-def parse_xml(xml_file, ns):
+def parse_xml(xml_file):
     try:
         tree = etree.parse(xml_file)
         root = tree.getroot()
-        worksheets_xml = root.findall(etree.QName(ns, 'Worksheet').text)
+
+        # setup namespace map and default namespace
+        nsmap = {k: v for k, v in root.nsmap.items()}
+        default_ns = nsmap[None] if None in nsmap else ''
+
+        worksheets_xml = root.findall(etree.QName(default_ns, 'Worksheet').text)
         for worksheet_xml in worksheets_xml:
             rows = []
 
-            table_xml = worksheet_xml.find(etree.QName(ns, 'Table').text)
-            rows_xml = table_xml.findall(etree.QName(ns, 'Row').text)
+            table_xml = worksheet_xml.find(etree.QName(default_ns, 'Table').text)
+            rows_xml = table_xml.findall(etree.QName(default_ns, 'Row').text)
             for row_xml in rows_xml:
                 row = []
-                cells_xml = row_xml.findall(etree.QName(ns, 'Cell').text)
+                cells_xml = row_xml.findall(etree.QName(default_ns, 'Cell').text)
                 for cell_xml in cells_xml:
-                    cell_value = get_cell_value_from_xml(cell_xml, ns)
+                    cell_value = get_cell_value_from_xml(cell_xml, default_ns)
                     row.append(cell_value)
                 rows.append(row)
 
             base_name = os.path.splitext(os.path.basename(xml_file))[0]
-            worksheet_name = worksheet_xml.attrib.get(etree.QName(ns, 'Name').text)
+            worksheet_name = worksheet_xml.attrib.get(etree.QName(default_ns, 'Name').text)
             csv_file = base_name + '_' + worksheet_name + '.csv'
             write_to_csv(rows, csv_file)
     except etree.XMLSyntaxError:
@@ -59,7 +62,7 @@ def get_cell_value_from_excel(workbook, worksheet, row, col):
     if cell_type == xlrd.XL_CELL_DATE:
         try:
             year, month, day, hour, minute, second = xlrd.xldate_as_tuple(cell_value, workbook.datemode)
-            if year == 0 and month == 0 and day == 0: # no date specified
+            if year == 0 and month == 0 and day == 0:  # no date specified
                 cell_dt = time(hour, minute, second)
                 cell_value = cell_dt.strftime('%H:%M:%S.%f')[:-3]
             else:
@@ -104,20 +107,17 @@ def parse_arg():
     parser.add_argument('-i', '--input-file',
                         required=True,
                         help='input excel file, supported: xls, xlsx or xml')
-    parser.add_argument('-n', '--xml-namespace',
-                        default=DEFAULT_XML_NAMESPACE,
-                        help='namespace for excel xml file')
 
     args = parser.parse_args()
     return args
 
 
-def main(argv):
+def main():
     try:
         args = parse_arg()
         dummy, file_extension = os.path.splitext(os.path.basename(args.input_file))
         if file_extension.lower() == '.xml':
-            parse_xml(args.input_file, args.xml_namespace)
+            parse_xml(args.input_file)
         else:
             parse_xls(args.input_file)
     except Exception as e:
@@ -126,4 +126,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    main()
